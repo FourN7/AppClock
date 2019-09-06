@@ -29,7 +29,18 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 calendar.set(Calendar.HOUR_OF_DAY,tp_Clock.getCurrentHour());
                 calendar.set(Calendar.MINUTE,tp_Clock.getCurrentHour());
-                tv_Hienthi.setText("Bạn Dã Đặt Time Là:");
+
+                int gio=tp_Clock.getCurrentHour() ;
+                int phut=tp_Clock.getCurrentMinute();
+                String st_gio=String.valueOf(gio);
+                String st_phut=String.valueOf(phut);
+                if(gio>12){
+                    st_gio = String.valueOf(gio-12);
+                }
+                if(phut<10){
+                    st_phut ="0"+String.valueOf(phut);
+                }
+                tv_Hienthi.setText("Bạn Dã Đặt Time Là:"+st_gio+":"+st_phut);
             }
         });
         btn_Stop.setOnClickListener(new View.OnClickListener() {
