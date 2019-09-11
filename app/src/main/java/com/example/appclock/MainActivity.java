@@ -47,16 +47,20 @@ public class MainActivity extends AppCompatActivity {
                 if(phut<10){
                     st_phut ="0"+String.valueOf(phut);
                 }
+                intent.putExtra("extra","on");
                 pendingIntent=PendingIntent.getBroadcast(MainActivity.this,0,intent,PendingIntent.FLAG_CANCEL_CURRENT);
                 alarmManager.set(AlarmManager.RTC_WAKEUP,calendar.getTimeInMillis(),pendingIntent);
-                tv_Hienthi.setText("Bạn Dã Đặt Time Là:"+st_gio+":"+st_phut);
+                tv_Hienthi.setText("Bạn Đã Đặt Time Là:"+st_gio+":"+st_phut);
             }
         });
         btn_Stop.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 tv_Hienthi.setText("Dừng Lại");
-                pendingIntent.cancel();
+                alarmManager.cancel(pendingIntent);
+                intent.putExtra("extra","off");
+                sendBroadcast(intent);
+
             }
         });
     }

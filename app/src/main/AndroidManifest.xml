@@ -17,6 +17,8 @@
             </intent-filter>
         </activity>
         <receiver android:name=".AlarmReceiver"/>
+        <service android:name="Music"
+            android:enabled="true"/>
     </application>
 
 </manifest>
