@@ -2,6 +2,9 @@ package com.example.appclock;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -15,6 +18,9 @@ public class MainActivity extends AppCompatActivity {
     Button btn_Start, btn_Stop;
     TextView tv_Hienthi;
     Calendar calendar;
+    Intent intent=new Intent(MainActivity.this,AlarmReceiver.class);
+    AlarmManager alarmManager;
+    PendingIntent pendingIntent;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -24,6 +30,7 @@ public class MainActivity extends AppCompatActivity {
         btn_Stop=findViewById(R.id.btn_stop);
         tv_Hienthi=findViewById(R.id.textView_HienThi);
         calendar = Calendar.getInstance();
+        alarmManager=(AlarmManager) getSystemService(ALARM_SERVICE);
         btn_Start.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -40,6 +47,8 @@ public class MainActivity extends AppCompatActivity {
                 if(phut<10){
                     st_phut ="0"+String.valueOf(phut);
                 }
+                pendingIntent=PendingIntent.getBroadcast(MainActivity.this,0,intent,PendingIntent.FLAG_CANCEL_CURRENT);
+                alarmManager.set(AlarmManager.RTC_WAKEUP,calendar.getTimeInMillis(),pendingIntent);
                 tv_Hienthi.setText("Bạn Dã Đặt Time Là:"+st_gio+":"+st_phut);
             }
         });
@@ -47,6 +56,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 tv_Hienthi.setText("Dừng Lại");
+                pendingIntent.cancel();
             }
         });
     }
